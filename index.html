@@ -1,2 +1,132 @@
-<html><head></head><body>hi
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foretown - Welcome</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font:400 15px/1.45 "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;color:#343434;background:#e3e3e3}
+  a{color:#00a2ff;text-decoration:none}a:hover{text-decoration:underline}
+  header{background:#0074bd;height:48px;color:#fff}
+  header .in{max-width:1000px;height:100%;margin:0 auto;padding:0 12px;display:flex;align-items:center;gap:18px}
+  .brand{font-weight:900;font-size:24px;letter-spacing:-.5px;color:#fff}
+  .brand:hover{text-decoration:none}
+  header nav{display:flex;gap:4px;flex:1}
+  header nav a{color:#fff;font-weight:600;padding:13px 12px}
+  header nav a:hover{background:#0067a9;text-decoration:none}
+  .hlogin{display:flex;gap:6px;align-items:center}
+  .hlogin input{width:130px;height:30px;padding:0 8px;border:1px solid #0067a9;border-radius:3px;font:inherit;font-size:14px}
+  .hlogin button{height:30px;padding:0 14px;border:1px solid #fff;border-radius:3px;background:transparent;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+  .hlogin button:hover{background:#fff;color:#0074bd}
+  .hlogin a{color:#cfe8f8;font-size:12px}
+  #hmsg{background:#fff1f0;color:#b3261e;text-align:center;font-size:13px;padding:6px;display:none;border-bottom:1px solid #e0a29c}
+  .hero{background:linear-gradient(180deg,#1b4a7a 0,#2b78b8 55%,#56a9dc 100%);position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:#3f8a3a;border-top:6px solid #4fa148}
+  .hero .in{max-width:1000px;margin:0 auto;padding:44px 12px 70px;display:flex;gap:30px;align-items:center;justify-content:space-between;flex-wrap:wrap;position:relative;z-index:1}
+  .pitch{flex:1 1 380px;color:#fff}
+  .pitch h1{margin:0;font-size:56px;line-height:1.05;font-weight:900;letter-spacing:-1.5px}
+  .pitch p{font-size:21px;font-weight:300;margin:14px 0 22px;max-width:440px}
+  .bignote{display:inline-block;background:rgba(0,0,0,.25);padding:8px 14px;border-radius:3px;font-size:14px}
+  .card{flex:0 0 360px;width:360px;max-width:100%;background:#fff;border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.3);padding:22px}
+  .card h2{margin:0 0 4px;font-size:22px;font-weight:700;color:#343434}
+  .card .sub{color:#797979;font-size:13px;margin:0 0 14px}
+  label{display:block;font-size:13px;font-weight:600;color:#797979;margin:12px 0 4px}
+  .card input[type=text],.card input[type=password],.card select{width:100%;height:36px;border:1px solid #c3c3c3;border-radius:3px;padding:0 8px;font:inherit;background:#fff;color:#343434}
+  .bday{display:flex;gap:6px}
+  .gender{display:flex;gap:8px;margin-top:4px}
+  .gender button{flex:1;height:36px;border:1px solid #c3c3c3;background:#fff;border-radius:3px;font:inherit;cursor:pointer;color:#343434}
+  .gender button.sel{border-color:#00a2ff;background:#e8f6ff;color:#0074bd;font-weight:600}
+  input:focus,select:focus{outline:none;border-color:#00a2ff;box-shadow:0 0 0 1px #00a2ff}
+  button:focus-visible,a:focus-visible{outline:2px solid #ffb300;outline-offset:2px}
+  .go{display:block;width:100%;margin-top:18px;height:42px;border:0;border-radius:3px;background:#02b757;color:#fff;font:600 18px inherit;font-family:inherit;cursor:pointer}
+  .go:hover{background:#00a64f}
+  .alt{text-align:center;margin-top:12px;font-size:13px}
+  #msg{display:none;margin-top:10px;font-size:13px;color:#b3261e}
+  .features{max-width:1000px;margin:24px auto;padding:0 12px;display:flex;gap:14px;flex-wrap:wrap}
+  .feat{flex:1 1 260px;background:#fff;border:1px solid #c3c3c3;border-radius:3px;padding:20px}
+  .feat h3{margin:0 0 6px;font-size:18px;font-weight:700}
+  .feat p{margin:0;color:#797979}
+  .ico{width:44px;height:44px;border-radius:50%;background:#00a2ff;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:20px}
+  footer{background:#fff;border-top:1px solid #c3c3c3;margin-top:30px;padding:22px 12px;text-align:center;font-size:13px;color:#797979}
+  footer a{margin:0 10px;color:#343434}
+  @media (max-width:760px){header nav{display:none}.hlogin input{width:90px}.hlogin a{display:none}.pitch h1{font-size:42px}.card{flex:1 1 100%;width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="in">
+    <a class="brand" href="#">FORETOWN</a>
+    <nav aria-label="Main"><a href="#">Games</a><a href="#">Catalog</a><a href="#">People</a><a href="#">Build</a></nav>
+    <form class="hlogin" id="hf" novalidate>
+      <input type="text" id="hu" placeholder="Username" aria-label="Username" autocomplete="username">
+      <input type="password" id="hp" placeholder="Password" aria-label="Password" autocomplete="current-password">
+      <button type="submit">Log In</button>
+      <a href="#">Forgot?</a>
+    </form>
+  </div>
+</header>
+<div id="hmsg" role="alert"></div>
+
+<section class="hero">
+  <div class="in">
+    <div class="pitch">
+      <h1>Welcome to<br>Foretown</h1>
+      <p>Claim a lot, build your place and hang out with friends in a town that is yours to shape.</p>
+      <span class="bignote">Free to play on any device</span>
+    </div>
+    <div class="card">
+      <h2>Sign up and start playing</h2>
+      <p class="sub">It takes less than a minute.</p>
+      <form id="sf" novalidate>
+        <label for="mo">Birthday</label>
+        <div class="bday">
+          <select id="mo" aria-label="Month"></select>
+          <select id="dy" aria-label="Day"></select>
+          <select id="yr" aria-label="Year"></select>
+        </div>
+        <label for="su">Username</label>
+        <input type="text" id="su" placeholder="Don't use your real name" autocomplete="off">
+        <label for="sp">Password</label>
+        <input type="password" id="sp" autocomplete="new-password">
+        <label>Gender (optional)</label>
+        <div class="gender"><button type="button">Girl</button><button type="button">Boy</button></div>
+        <div id="msg" role="alert"></div>
+        <button class="go" type="submit">Sign Up</button>
+      </form>
+      <div class="alt"><a href="#" id="g">Play as Guest</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feat"><div class="ico">1</div><h3>Play Games</h3><p>Theres a lot of games to pick from.</p></div>
+  <div class="feat"><div class="ico">2</div><h3>Make Friends</h3><p>Add friends, visit their place's and explore the streets together.</p></div>
+  <div class="feat"><div class="ico">3</div><h3>Play anywhere</h3><p>Jump in from your computer, phone or tablet with the same account.</p></div>
+</section>
+
+<footer>
+  <a href="#">About Us</a><a href="#">Jobs</a><a href="#">Blog</a><a href="#">Parents</a><a href="#">Help</a><a href="#">Terms</a><a href="#">Privacy</a>
+  <div style="margin-top:10px">&copy; 2026 Foretown. All rights reserved.</div>
+</footer>
+
+<script>
+  var $=function(i){return document.getElementById(i)};
+  var M=['Month','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  $('mo').innerHTML=M.map(function(m,i){return '<option value="'+(i||'')+'">'+m+'</option>'}).join('');
+  var d='<option value="">Day</option>';for(var i=1;i<=31;i++)d+='<option>'+i+'</option>';$('dy').innerHTML=d;
+  var y='<option value="">Year</option>';for(var j=new Date().getFullYear();j>=1930;j--)y+='<option>'+j+'</option>';$('yr').innerHTML=y;
+  document.querySelectorAll('.gender button').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('.gender button').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel')}});
+  $('hf').addEventListener('submit',function(e){e.preventDefault();
+    var m=$('hmsg');m.style.display='block';
+    m.textContent=(!$('hu').value.trim()||!$('hp').value)?'Enter your username and password.':'Login is not connected yet. Hook this up to your server.';
+  });
+  $('sf').addEventListener('submit',function(e){e.preventDefault();
+    var m=$('msg');m.style.display='block';
+    m.textContent=(!$('mo').value||!$('dy').value||!$('yr').value)?'Choose your birthday.':(!$('su').value.trim()||!$('sp').value)?'Enter a username and password.':'Sign up is not connected yet.';
+  });
+  $('g').addEventListener('click',function(e){e.preventDefault();var m=$('msg');m.style.display='block';m.textContent='Guest play is not connected yet.'});
+</script>
+</body>
+</html>
