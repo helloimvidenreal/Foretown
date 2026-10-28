@@ -67,7 +67,10 @@
     (() => {
       'use strict';
       const HOSTED = 'https://open-chat-8c504e.yummybrush64.chatgpt.site';
-      const API = (location.protocol === 'file:' ? HOSTED : '') + '/api/random';
+      // Static uploads use the existing hosted backend. Use 'same-origin'
+      // only when deploying the matching Worker and D1 database with this page.
+      const API_SERVER = 'https://open-chat-8c504e.yummybrush64.chatgpt.site';
+      const API = (API_SERVER === 'same-origin' ? (location.protocol === 'file:' ? HOSTED : location.origin) : API_SERVER).replace(/\/$/, '') + '/api/random';
       const $ = id => document.getElementById(id);
       const token = Array.from(crypto.getRandomValues(new Uint8Array(32)), n => n.toString(16).padStart(2, '0')).join('');
       let mode = 'video', phase = 'idle', active = false, busy = false, seq = 0, generation = 0;
