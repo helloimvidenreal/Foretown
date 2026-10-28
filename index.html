@@ -1,58 +1,378 @@
-<html><head>
-<meta charset="UTF-8">
-<meta name="authoring-tool" content="Adobe_Animate_CC">
-<title>Untitled-1</title>
-<!-- write your code here -->
-<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-<script src="Untitled-1.js"></script>
-<script>
-var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
-function init() {
-	canvas = document.getElementById("canvas");
-	anim_container = document.getElementById("animation_container");
-	dom_overlay_container = document.getElementById("dom_overlay_container");
-	var comp=AdobeAn.getComposition("9FD0BFDDD197844F927F1387E2F67BD6");
-	var lib=comp.getLibrary();
-	var loader = new createjs.LoadQueue(false);
-	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
-	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
-	var lib=comp.getLibrary();
-	loader.loadManifest(lib.properties.manifest);
-}
-function handleFileLoad(evt, comp) {
-	var images=comp.getImages();	
-	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
-}
-function handleComplete(evt,comp) {
-	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
-	var lib=comp.getLibrary();
-	var ss=comp.getSpriteSheet();
-	var queue = evt.target;
-	var ssMetadata = lib.ssMetadata;
-	for(i=0; i<ssMetadata.length; i++) {
-		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
-	}
-	exportRoot = new lib.Untitled1();
-	stage = new lib.Stage(canvas);	
-	//Registers the "tick" event listener.
-	fnStartAnimation = function() {
-		stage.addChild(exportRoot);
-		createjs.Ticker.framerate = lib.properties.fps;
-		createjs.Ticker.addEventListener("tick", stage);
-	}	    
-	//Code to support hidpi screens and responsive scaling.
-	AdobeAn.makeResponsive(false,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
-	AdobeAn.compositionLoaded(lib.properties.id);
-	fnStartAnimation();
-}
-</script>
-<!-- write your code here -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f8fb">
+  <meta name="description" content="Meet someone new. Random one-to-one text and video chat, with a Next button when you're ready for someone else.">
+  <title>Open Chat — Meet someone new</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23ff962f'/%3E%3Cpath d='M17 18h30v23H29l-12 8z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#253047}body{background:#f7f8fb}button,textarea{font:inherit}button{cursor:pointer;transition:background .15s,transform .15s}button:disabled{cursor:default;opacity:.45}button:focus-visible,textarea:focus-visible{outline:3px solid #b4c9ff;outline-offset:3px}button:hover:not(:disabled){filter:brightness(.97)}svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}header{height:88px;background:#fff;border-bottom:1px solid #e9edf3;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 max(28px,calc((100vw - 1216px)/2))}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}.logo{display:grid;place-items:center;width:39px;height:39px;background:#fff0df;color:#f58a22;border-radius:12px}.logo svg{width:24px;height:24px}.wordmark{font-size:25px;letter-spacing:-1.2px;font-weight:750}.wordmark span{color:#f58a22}.tagline{font-size:12px;color:#9298a5;margin-left:15px;border-left:1px solid #e4e8f0;padding-left:23px}.share{background:white;border:1px solid #e0e5ef;border-radius:9px;padding:10px 13px;display:flex;gap:8px;align-items:center;font-size:12px;color:#657087}.share svg{width:15px;height:15px}.workspace{width:min(100% - 56px,1216px);margin:35px auto 24px}.intro{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:21px}h1{font-size:24px;letter-spacing:-.7px;margin:0 0 7px;font-weight:650}.intro p{color:#8b93a2;font-size:13px;margin:0}.modes{display:flex;padding:4px;gap:3px;background:#ebeff5;border:1px solid #e4e9f1;border-radius:11px;flex:none}.mode{display:flex;align-items:center;gap:7px;justify-content:center;background:transparent;border:0;color:#8790a1;border-radius:7px;font-size:12px;font-weight:600;padding:10px 17px}.mode svg{width:16px;height:16px}.mode[aria-pressed=true]{color:#315dd4;background:white;box-shadow:0 2px 7px #2839610c}.app{display:grid;grid-template-columns:360px minmax(0,1fr);gap:20px;min-height:570px}.app[data-mode=text]{grid-template-columns:minmax(0,1fr);max-width:940px;margin:auto}.app[data-mode=text] .videos{display:none}.videos{display:grid;grid-template-rows:1fr 1fr;gap:16px;min-width:0}.video-card{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:14px;background:#202735;color:#d5dbe7;isolation:isolate;border:1px solid #263042}.video-card.local{background:#292f3a}.video-card video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#202735}.video-card.local video{transform:scaleX(-1)}.video-card video[hidden]{display:none}.video-label{position:absolute;top:15px;left:16px;z-index:3;display:flex;align-items:center;gap:7px;font-size:11px;background:#17202a80;color:#f4f6fb;padding:6px 9px;border-radius:6px;backdrop-filter:blur(10px)}.video-label i{width:5px;height:5px;border-radius:100%;background:#8190a8}.video-label i.live{background:#6bd1a1}.placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:35px 24px}.placeholder-icon{background:#ffffff07;border:1px solid #ffffff0b;border-radius:50%;width:62px;height:62px;display:grid;place-items:center;margin-bottom:14px;color:#7a899f}.placeholder-icon svg{width:27px;height:27px}.placeholder strong{font-size:13px;color:#c8d0dd;font-weight:500;line-height:1.5}.placeholder p{font-size:11px;color:#748197;margin:7px 0 0;line-height:1.6}.media-controls{position:absolute;z-index:3;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:9px}.icon-button{width:37px;height:37px;border:1px solid #ffffff19;border-radius:50%;background:#17202bbf;backdrop-filter:blur(10px);color:#eff3fa;display:grid;place-items:center}.icon-button svg{width:17px;height:17px}.icon-button[aria-pressed=true]{background:#c75b4a;color:white}.play-audio{position:absolute;z-index:4;bottom:18px;left:50%;transform:translateX(-50%);border:0;border-radius:7px;background:white;padding:9px 13px;font-size:11px;color:#315dd4;white-space:nowrap}.conversation{min-width:0;border:1px solid #e1e6ef;background:white;border-radius:14px;display:flex;flex-direction:column;height:100%;min-height:570px;max-height:calc(100dvh - 233px);overflow:hidden;box-shadow:0 4px 18px #26334903}.chat-top{display:flex;align-items:center;justify-content:space-between;padding:19px 22px;border-bottom:1px solid #edf0f5;gap:16px}.room-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}.room-title svg{width:16px;height:16px;color:#8b97ad}.status{font-size:10px;color:#929baa;display:flex;align-items:center;gap:6px;white-space:nowrap}.dot{width:5px;height:5px;border-radius:50%;background:#a5aebd}.status[data-state=matched] .dot{background:#36b487}.status[data-state=waiting] .dot,.status[data-state=preparing] .dot{background:#f3a347;animation:pulse 1.6s ease-in-out infinite}.history{position:relative;flex:1;min-height:180px;overflow:auto;padding:23px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#dde4ef transparent}.empty{height:100%;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:25px}.welcome-icon{display:grid;place-items:center;width:65px;height:65px;border-radius:19px;background:#fff6eb;color:#eea04e;margin-bottom:22px;transform:rotate(-6deg)}.welcome-icon svg{width:30px;height:30px;transform:rotate(6deg)}.empty h2{font-size:20px;font-weight:600;letter-spacing:-.5px;margin:0 0 10px;color:#434f65}.empty p{font-size:13px;line-height:1.8;max-width:285px;color:#929aa9;margin:0}.waiting-animation{display:flex;gap:6px;margin-bottom:22px}.waiting-animation i{width:8px;height:8px;background:#faa34b;border-radius:50%;animation:pulse 1.2s infinite}.waiting-animation i:nth-child(2){animation-delay:.2s}.waiting-animation i:nth-child(3){animation-delay:.4s}.messages{display:flex;flex-direction:column;gap:16px}.system-message{font-size:11px;line-height:1.6;color:#929bad;align-self:center;text-align:center;margin:6px 0 13px;max-width:95%}.message{max-width:85%;align-self:flex-start;min-width:0}.message.own{align-self:flex-end}.meta{font-size:10px;color:#9ba4b3;margin:0 3px 6px;display:flex;gap:9px}.meta strong{font-weight:600;color:#78879f}.own .meta{justify-content:flex-end}.bubble{font-size:13px;line-height:1.65;padding:11px 14px;border-radius:3px 12px 12px 12px;background:#f2f5fa;color:#47566b;white-space:pre-wrap;overflow-wrap:anywhere;unicode-bidi:plaintext}.own .bubble{background:#edf3ff;color:#345394;border-radius:12px 3px 12px 12px}.composer{border-top:1px solid #edf0f5;padding:16px 20px 17px}.error{font-size:12px;line-height:1.6;color:#b05d40;margin:0 0 10px}.input-wrap{display:flex;align-items:flex-end;gap:8px;border:1px solid #dfe5ef;border-radius:10px;padding:6px}.input-wrap:focus-within{border-color:#81a0ec;box-shadow:0 0 0 3px #f1f5ff}textarea{width:100%;resize:none;height:39px;max-height:120px;font-size:13px;line-height:20px;padding:10px 8px;border:0;background:transparent;color:#47566b;outline:none!important}textarea::placeholder{color:#a4adbb}textarea:disabled{cursor:default}.send{height:37px;width:39px;flex:none;border:0;border-radius:7px;background:#3c6bdb;color:white;display:grid;place-items:center}.send svg{width:17px;height:17px}.actions{display:flex;gap:9px;margin-top:12px}.primary,.next,.stop{display:flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:8px;min-height:42px;font-size:12px;font-weight:600;padding:0 17px}.primary{background:#ff9e3e;color:white;min-width:152px}.primary svg{width:16px;height:16px}.next{background:#edf3ff;color:#416bc3;border:1px solid #e0e9fc;min-width:100px}.next svg{width:15px;height:15px}.stop{margin-left:auto;color:#929cab;border:1px solid #e3e8f0;background:white;padding:0 15px}.stop svg{width:13px;height:13px;fill:currentColor;stroke:none}.hint{margin-top:10px;color:#a0a8b7;font-size:10px;line-height:1.5;display:flex;justify-content:space-between;gap:10px}.bottom-note{display:flex;justify-content:space-between;gap:20px;margin-top:20px;color:#a0a8b7;font-size:10px;line-height:1.7}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}@keyframes pulse{50%{opacity:.35}}@media(min-width:1500px){.workspace{margin-top:48px}.app{grid-template-columns:400px minmax(0,1fr)}.conversation{min-height:620px}}@media(max-width:950px){.app{grid-template-columns:290px minmax(0,1fr);gap:15px}.videos{display:flex;flex-direction:column;gap:15px}.video-card{flex:none;aspect-ratio:4/3}.conversation{min-height:500px}.primary{min-width:0;padding:0 12px}.actions{gap:7px}.next{min-width:75px;padding:0 12px}.composer{padding:14px}.tagline{display:none}.hint .keyboard{display:none}}@media(max-width:720px){header{height:68px;padding:0 18px}.wordmark{font-size:23px}.share{padding:9px}.share span{display:none}.workspace{width:calc(100% - 28px);margin:23px auto 17px}.intro{gap:15px;align-items:flex-start;margin-bottom:17px;flex-wrap:wrap}h1{font-size:22px}.intro p{font-size:12px}.modes{padding:3px}.mode{padding:9px 14px}.app{display:flex;flex-direction:column;gap:13px;min-height:0}.app[data-mode=text]{display:flex}.videos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;gap:10px}.video-card{aspect-ratio:4/3;border-radius:11px}.video-label{top:8px;left:8px;padding:4px 7px;font-size:9px}.placeholder{padding:28px 10px 15px}.placeholder-icon{width:38px;height:38px;margin-bottom:9px}.placeholder-icon svg{width:19px;height:19px}.placeholder strong{font-size:10px}.placeholder p{display:none}.media-controls{bottom:8px;gap:7px}.icon-button{width:28px;height:28px}.icon-button svg{width:14px;height:14px}.local .placeholder{padding-bottom:44px}.local .placeholder-icon{display:none}.conversation{min-height:420px;height:calc(100dvh - 360px);max-height:none}.app[data-mode=text] .conversation{height:calc(100dvh - 232px);min-height:420px}.chat-top{padding:15px 17px}.history{padding:18px}.empty{min-height:200px;padding:20px 8px}.empty h2{font-size:17px}.empty p{font-size:12px}.welcome-icon{width:51px;height:51px;border-radius:15px;margin-bottom:17px}.welcome-icon svg{width:25px;height:25px}.primary{min-width:136px}.next{min-width:80px}.stop{padding:0 12px}.bottom-note{font-size:9px;margin-top:15px;gap:18px}.bottom-note span:last-child{max-width:210px;text-align:right}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  </style>
 </head>
-<body onload="init();" style="margin:0px;">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:1280px; height:720px">
-		<canvas id="canvas" width="1280" height="720" style="position: absolute; display: block; background-color: rgb(255, 255, 255); width: 1280px; height: 720px;"></canvas>
-		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1280px; height:720px; position: absolute; left: 0px; top: 0px; display: block;">
-		</div>
-	</div>
-
-<div id="preloadjs-container" style="visibility: hidden; position: absolute; height: 10px; width: 10px; overflow: hidden; transform: translate(-10px, -10px);"></div></body></html>
+<body>
+  <header>
+    <a class="brand" href="/" aria-label="Open Chat home"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01" stroke-width="3"/></svg></span><span class="wordmark">open<span>chat</span></span><span class="tagline">a little hello goes a long way.</span></a>
+    <button class="share" id="share" type="button" aria-label="Copy site link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 .2l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7-.2l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span id="share-text">Invite a friend</span></button>
+  </header>
+  <main class="workspace">
+    <div class="intro">
+      <div><h1>Meet someone new.</h1><p>A random stranger. A fresh conversation. Just say hello.</p></div>
+      <div class="modes" role="group" aria-label="Chat mode">
+        <button class="mode" id="text-mode" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 1-8 8H5l-3 3V11a9 9 0 1 1 18 0Z"/><path d="M7 10h8m-8 4h5"/></svg>Text</button>
+        <button class="mode" id="video-mode" type="button" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="m15 10 6-4v12l-6-4"/></svg>Video</button>
+      </div>
+    </div>
+    <div class="app" id="app" data-mode="video">
+      <aside class="videos" aria-label="Video chat">
+        <div class="video-card">
+          <video id="remote-video" autoplay playsinline hidden aria-label="Stranger's video"></video>
+          <span class="video-label"><i id="remote-dot"></i>Stranger</span>
+          <div class="placeholder" id="remote-placeholder"><div class="placeholder-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></div><strong id="remote-title">Someone new is out there.</strong><p id="remote-subtitle">Start a chat to meet them.</p></div>
+          <button class="play-audio" id="play-audio" type="button" hidden>Tap to play video &amp; audio</button>
+        </div>
+        <div class="video-card local">
+          <video id="local-video" autoplay muted playsinline hidden aria-label="Your camera preview"></video>
+          <span class="video-label"><i id="local-dot"></i>You</span>
+          <div class="placeholder" id="local-placeholder"><div class="placeholder-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 3 18 18M10.5 6H13a2 2 0 0 1 2 2v2l6-4v12l-4-2M6 6H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1"/></svg></div><strong id="local-title">Your camera is off</strong><p>Only turn it on when you're ready.</p></div>
+          <div class="media-controls">
+            <button class="icon-button" id="microphone" type="button" aria-label="Mute microphone" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2m-7 9v3m-4 0h8"/><path class="slash" d="m3 3 18 18" hidden/></svg></button>
+            <button class="icon-button" id="camera" type="button" aria-label="Turn camera off" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="m15 10 6-4v12l-6-4"/><path class="slash" d="m3 3 18 18" hidden/></svg></button>
+          </div>
+        </div>
+      </aside>
+      <section class="conversation" aria-label="One-to-one chat">
+        <div class="chat-top"><span class="room-title"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 21v-2a6 6 0 0 1 12 0v2m1-7a6 6 0 0 1 7 5v2"/></svg><span id="room-title">A new conversation</span></span><span class="status" id="status" data-state="idle" role="status"><i class="dot" aria-hidden="true"></i><span id="status-label">Ready when you are</span></span></div>
+        <div class="history" id="history" aria-label="Messages">
+          <div class="empty" id="empty"><div class="welcome-icon" id="welcome-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01" stroke-width="3"/></svg></div><div class="waiting-animation" id="waiting-animation" aria-hidden="true" hidden><i></i><i></i><i></i></div><h2 id="empty-title">Your next hello starts here.</h2><p id="empty-description">Press Start video chat to meet a random stranger, or choose text to keep it simple.</p></div>
+          <div class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+        </div>
+        <form class="composer" id="form">
+          <p class="error" id="error" role="alert" hidden></p>
+          <div class="input-wrap"><label for="message" class="sr-only">Message your current partner</label><textarea id="message" rows="1" maxlength="1000" placeholder="Start a chat to send a message…" disabled enterkeyhint="send"></textarea><button class="send" id="send" type="submit" disabled aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg></button></div>
+          <div class="actions">
+            <button class="primary" id="start" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7Z"/></svg><span id="start-label">Start video chat</span></button>
+            <button class="next" id="next" type="button" disabled><span>Next</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 10 7-10 7Zm14 0v14"/></svg></button>
+            <button class="stop" id="stop" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>Stop</button>
+          </div>
+          <div class="hint"><span id="context-hint">Camera access starts only when you press Start.</span><span class="keyboard">Enter to send</span></div>
+        </form>
+      </section>
+    </div>
+    <div class="bottom-note"><span>One stranger at a time. No account needed.</span><span>Next ends your current chat and finds someone else.</span></div>
+  </main>
+  <noscript>Please enable JavaScript to use random matching and video chat.</noscript>
+  <script>
+    (() => {
+      'use strict';
+      const HOSTED = 'https://open-chat-8c504e.yummybrush64.chatgpt.site';
+      const API = (location.protocol === 'file:' ? HOSTED : '') + '/api/random';
+      const $ = id => document.getElementById(id);
+      const token = Array.from(crypto.getRandomValues(new Uint8Array(32)), n => n.toString(16).padStart(2, '0')).join('');
+      let mode = 'video', phase = 'idle', active = false, busy = false, seq = 0, generation = 0;
+      let roomId = null, cursor = 0, pollTimer, polling = false, networkFailures = 0;
+      let localStream = null, peer = null, peerRoom = null, candidates = [], signalQueue = Promise.resolve(), videoTimer;
+      let remoteCamera = true, sending = false, sendSerial = 0, draft = null;
+      const seen = new Set(), clock = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit' });
+      const history = $('history');
+      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+      function error(message = '') { $('error').textContent = message; $('error').hidden = !message; }
+      function system(message) {
+        const node = document.createElement('p'); node.className = 'system-message'; node.textContent = message;
+        $('messages').append(node); $('empty').hidden = true; scrollDown();
+      }
+      function scrollDown() { history.scrollTop = history.scrollHeight; }
+      function resetLog() { $('messages').replaceChildren(); seen.clear(); $('empty').hidden = false; $('message').value = ''; draft = null; sendSerial++; sending = false; resize(); }
+      function resize() { $('message').style.height = '39px'; $('message').style.height = Math.min(120, $('message').scrollHeight) + 'px'; }
+      function render() {
+        $('app').dataset.mode = mode;
+        $('video-mode').setAttribute('aria-pressed', String(mode === 'video'));
+        $('text-mode').setAttribute('aria-pressed', String(mode === 'text'));
+        $('status').dataset.state = phase;
+        const labels = { idle: 'Ready when you are', preparing: 'Starting camera…', waiting: 'Looking for someone…', matched: 'Connected', ended: 'Chat ended', reconnecting: 'Reconnecting…' };
+        $('status-label').textContent = labels[phase] || 'Ready when you are';
+        $('room-title').textContent = phase === 'matched' ? 'You & a stranger' : phase === 'waiting' ? 'Finding your next hello' : 'A new conversation';
+        $('start').hidden = ['matched', 'ended'].includes(phase);
+        $('start').disabled = busy || active;
+        $('start-label').textContent = phase === 'preparing' ? 'Starting camera…' : phase === 'waiting' ? 'Finding someone…' : mode === 'video' ? 'Start video chat' : 'Start text chat';
+        $('next').disabled = busy || !['matched', 'ended'].includes(phase);
+        $('stop').disabled = phase === 'idle' && !localStream;
+        $('message').disabled = phase !== 'matched' || busy;
+        $('message').placeholder = phase === 'matched' ? 'Say hello to your stranger…' : phase === 'waiting' ? 'Finding someone for you…' : 'Start a chat to send a message…';
+        $('send').disabled = phase !== 'matched' || busy || sending || !$('message').value.trim();
+        $('text-mode').disabled = busy && phase !== 'preparing';
+        $('video-mode').disabled = busy && phase !== 'preparing';
+        $('context-hint').textContent = phase === 'matched' ? 'Only you and your current partner receive these messages.' : mode === 'video' ? 'Camera access starts only when you press Start.' : 'Text mode keeps your camera and microphone off.';
+        const waiting = phase === 'waiting' || phase === 'reconnecting';
+        $('waiting-animation').hidden = !waiting; $('welcome-icon').hidden = waiting;
+        if (phase === 'waiting') { $('empty-title').textContent = 'Looking for someone…'; $('empty-description').textContent = 'Waiting for another person to start ' + (mode === 'video' ? 'a video' : 'a text') + ' chat. Keep this page open.'; }
+        else if (phase === 'preparing') { $('empty-title').textContent = 'Let’s get your camera ready.'; $('empty-description').textContent = 'Allow camera and microphone access in your browser to begin.'; }
+        else if (phase === 'reconnecting') { $('empty-title').textContent = 'Reconnecting to the chat…'; $('empty-description').textContent = 'Check your connection. We’ll try again automatically.'; }
+        else { $('empty-title').textContent = 'Your next hello starts here.'; $('empty-description').textContent = mode === 'video' ? 'Press Start video chat to meet a random stranger, or choose text to keep it simple.' : 'Press Start text chat. We’ll match you with another person who’s ready to talk.'; }
+        updateLocal();
+      }
+      function updateLocal() {
+        const videoOn = !!localStream?.getVideoTracks().some(track => track.enabled && track.readyState === 'live');
+        const audioOn = !!localStream?.getAudioTracks().some(track => track.enabled && track.readyState === 'live');
+        $('local-video').hidden = !videoOn; $('local-placeholder').hidden = videoOn;
+        $('local-title').textContent = localStream ? 'Camera paused' : 'Your camera is off';
+        $('local-dot').classList.toggle('live', videoOn);
+        for (const [id, on, enabledLabel, disabledLabel] of [['camera', videoOn, 'Turn camera off', 'Turn camera on'], ['microphone', audioOn, 'Mute microphone', 'Unmute microphone']]) {
+          $(id).disabled = !localStream; $(id).setAttribute('aria-pressed', String(!!localStream && !on)); $(id).setAttribute('aria-label', on ? enabledLabel : disabledLabel);
+          $(id).querySelector('.slash').toggleAttribute('hidden', !localStream || on);
+        }
+      }
+      function remotePlaceholder(title, subtitle = '') {
+        $('remote-title').textContent = title; $('remote-subtitle').textContent = subtitle; $('remote-placeholder').hidden = false; $('remote-video').hidden = true;
+      }
+      function closePeer() {
+        clearTimeout(videoTimer);
+        const previous = peer; peer = null; peerRoom = null; candidates = []; signalQueue = Promise.resolve();
+        if (previous) { previous.onicecandidate = null; previous.ontrack = null; previous.onconnectionstatechange = null; previous.close(); }
+        $('remote-video').srcObject = null; $('remote-video').hidden = true; $('remote-dot').classList.remove('live'); $('play-audio').hidden = true; remoteCamera = true;
+        remotePlaceholder('Someone new is out there.', 'Start a chat to meet them.');
+      }
+      function releaseMedia() {
+        if (localStream) localStream.getTracks().forEach(track => track.stop());
+        localStream = null; $('local-video').srcObject = null; updateLocal();
+      }
+      async function api(payload, query = '', keepalive = false) {
+        const response = await fetch(API + query, { method: payload ? 'POST' : 'GET', headers: { 'X-Chat-Token': token, ...(payload ? { 'Content-Type': 'application/json' } : {}) }, body: payload ? JSON.stringify(payload) : undefined, credentials: 'omit', cache: 'no-store', keepalive, signal: keepalive ? undefined : AbortSignal.timeout(12000) });
+        let data; try { data = await response.json(); } catch { throw new Error('Could not reach the chat. Please try again.'); }
+        if (!response.ok) { const problem = new Error(data.error || 'Could not reach the chat. Please try again.'); problem.status = response.status; problem.code = data.code; throw problem; }
+        return data;
+      }
+      async function retry(payload, epoch, targetRoom) {
+        let last;
+        for (let attempt = 0; attempt < 3; attempt++) {
+          if (epoch !== generation || (targetRoom && targetRoom !== roomId)) throw new Error('Chat changed.');
+          try { return await api(payload); }
+          catch (problem) { last = problem; if ((problem.status && problem.status < 500) || attempt === 2) throw problem; await delay(350 * (attempt + 1)); }
+        }
+        throw last;
+      }
+      async function begin(next = false) {
+        if (busy) return;
+        const epoch = ++generation; busy = true; active = false; clearTimeout(pollTimer); error(); closePeer(); resetLog(); roomId = null; cursor = 0;
+        phase = mode === 'video' && !localStream ? 'preparing' : 'waiting'; render();
+        try {
+          if (mode === 'video' && !localStream) {
+            if (!navigator.mediaDevices?.getUserMedia || !window.RTCPeerConnection) throw new Error('Video chat needs a browser with camera support. Open the site directly in a modern browser, or choose Text.');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }, audio: { echoCancellation: true, noiseSuppression: true } });
+            if (epoch !== generation) { stream.getTracks().forEach(track => track.stop()); return; }
+            localStream = stream; $('local-video').srcObject = stream; $('local-video').play().catch(() => {});
+          }
+          if (epoch !== generation) return;
+          phase = 'waiting'; active = true; render();
+          const currentSeq = ++seq;
+          const data = await retry({ action: next ? 'next' : 'join', mode, seq: currentSeq }, epoch);
+          if (epoch !== generation) return;
+          await applyState(data, epoch);
+        } catch (problem) {
+          if (epoch !== generation) return;
+          const reason = problem.name === 'NotAllowedError' ? 'Camera or microphone permission was blocked. Allow access in your browser, or choose Text.' : problem.name === 'NotFoundError' ? 'No camera or microphone was found. Connect a device, or choose Text.' : problem.name === 'NotReadableError' ? 'Your camera or microphone is busy. Close other apps using it and try again.' : problem.message;
+          stop(); error(reason);
+        } finally {
+          if (epoch === generation) { busy = false; render(); if (active) schedulePoll(300); }
+        }
+      }
+      function stop() {
+        const previousMode = mode;
+        generation++; active = false; busy = false; phase = 'idle'; clearTimeout(pollTimer); closePeer(); releaseMedia(); roomId = null; cursor = 0; sendSerial++; sending = false; error(); render();
+        const endSeq = ++seq;
+        const payload = { action: 'leave', mode: previousMode, seq: endSeq };
+        api(payload, '', true).catch(() => { setTimeout(() => api(payload, '', true).catch(() => {}), 500); });
+      }
+      function schedulePoll(ms = 1000) { clearTimeout(pollTimer); if (active) pollTimer = setTimeout(poll, ms); }
+      async function poll() {
+        if (!active || busy) return;
+        if (polling) { schedulePoll(200); return; }
+        polling = true; const epoch = generation;
+        try {
+          const data = await api(null, '?after=' + cursor + (roomId ? '&room=' + roomId : ''));
+          if (epoch !== generation || !active) return;
+          networkFailures = 0;
+          await applyState(data, epoch);
+        } catch (problem) {
+          if (epoch !== generation) return;
+          networkFailures++;
+          if (problem.code === 'SESSION_EXPIRED') { stop(); error('Your session expired. Press Start to begin again.'); }
+          else { $('status-label').textContent = navigator.onLine ? 'Reconnecting…' : 'Offline'; if (phase === 'waiting') { phase = 'reconnecting'; render(); } }
+        } finally {
+          polling = false;
+          if (epoch === generation && active) schedulePoll(networkFailures ? Math.min(8000, networkFailures * 1500) : document.hidden ? 5000 : 1000);
+        }
+      }
+      async function applyState(data, epoch) {
+        if (epoch !== generation || data.controlSeq !== seq) return;
+        if (data.state === 'matched') {
+          if (data.roomId !== roomId) {
+            closePeer(); resetLog(); roomId = data.roomId; cursor = 0; phase = 'matched'; render();
+            system('You’re now chatting with a stranger. Say hello!');
+            if (mode === 'video') await connectVideo(data, epoch);
+          }
+          phase = 'matched';
+          for (const event of data.events) {
+            if (epoch !== generation || roomId !== data.roomId) return;
+            if (seen.has(event.id)) continue;
+            seen.add(event.id);
+            if (event.kind === 'message') addMessage(event);
+            else if (!event.mine && mode === 'video') {
+              try { await receiveSignal(event, epoch); }
+              catch { if (epoch === generation) videoProblem('Could not connect video.', 'You can still chat by text or choose Next.'); }
+            }
+          }
+          if (epoch === generation && roomId === data.roomId) cursor = Math.max(cursor, data.cursor);
+        } else if (data.state === 'ended') {
+          if (phase !== 'ended') system('Stranger disconnected. Choose Next to meet someone new.');
+          closePeer(); remotePlaceholder('Stranger disconnected.', 'Choose Next for a new conversation.');
+          phase = 'ended'; active = false; clearTimeout(pollTimer);
+        } else if (data.state === 'waiting') {
+          phase = 'waiting'; remotePlaceholder('Looking for a stranger…', 'Waiting for someone else to start video chat.');
+        } else { phase = 'idle'; active = false; closePeer(); releaseMedia(); }
+        render();
+      }
+      function addMessage(event) {
+        if ($('messages').querySelector('[data-event="' + event.id + '"]')) return;
+        const nearBottom = history.scrollHeight - history.scrollTop - history.clientHeight < 100;
+        const article = document.createElement('article'); article.className = 'message' + (event.mine ? ' own' : ''); article.dataset.event = event.id;
+        const meta = document.createElement('div'); meta.className = 'meta';
+        const label = document.createElement('strong'); label.textContent = event.mine ? 'You' : 'Stranger';
+        const time = document.createElement('time'); time.dateTime = new Date(event.createdAt).toISOString(); time.textContent = clock.format(event.createdAt);
+        const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.textContent = event.data.body;
+        meta.append(label, time); article.append(meta, bubble);
+        const next = Array.from($('messages').querySelectorAll('[data-event]')).find(node => Number(node.dataset.event) > event.id);
+        $('messages').insertBefore(article, next || null); $('empty').hidden = true;
+        while ($('messages').children.length > 250) $('messages').firstElementChild.remove();
+        if (nearBottom || event.mine) scrollDown();
+      }
+      function videoProblem(title, subtitle) { remotePlaceholder(title, subtitle); $('remote-dot').classList.remove('live'); }
+      function sendSignal(kind, data, connection, targetRoom, epoch) {
+        const payload = { action: 'event', kind, data, roomId: targetRoom, eventId: crypto.randomUUID() };
+        const task = signalQueue.catch(() => {}).then(async () => {
+          if (peer !== connection || roomId !== targetRoom || epoch !== generation) return;
+          await retry(payload, epoch, targetRoom);
+        });
+        signalQueue = task.catch(problem => {
+          if (peer === connection && epoch === generation && problem.code !== 'CHAT_ENDED') videoProblem('Video setup was interrupted.', 'You can keep typing or choose Next.');
+        });
+        return task;
+      }
+      async function connectVideo(data, epoch) {
+        if (!localStream || epoch !== generation) return;
+        const connection = new RTCPeerConnection(data.rtcConfig), targetRoom = data.roomId;
+        peer = connection; peerRoom = targetRoom; candidates = []; remoteCamera = true;
+        remotePlaceholder('Connecting your video…', 'Say hello in the chat while we connect.');
+        localStream.getTracks().forEach(track => connection.addTrack(track, localStream));
+        connection.onicecandidate = event => { if (event.candidate) sendSignal('ice', event.candidate.toJSON(), connection, targetRoom, epoch).catch(() => {}); };
+        connection.ontrack = event => {
+          if (peer !== connection || epoch !== generation) return;
+          const stream = event.streams[0] || $('remote-video').srcObject || new MediaStream();
+          if (!event.streams[0]) stream.addTrack(event.track);
+          $('remote-video').srcObject = stream;
+          if (remoteCamera) { $('remote-placeholder').hidden = true; $('remote-video').hidden = false; }
+          $('remote-video').play().catch(() => { $('play-audio').hidden = false; });
+        };
+        connection.onconnectionstatechange = () => {
+          if (peer !== connection || epoch !== generation) return;
+          if (connection.connectionState === 'connected') {
+            clearTimeout(videoTimer); $('remote-dot').classList.add('live');
+            if (remoteCamera && $('remote-video').srcObject) { $('remote-placeholder').hidden = true; $('remote-video').hidden = false; }
+          } else if (connection.connectionState === 'failed') {
+            videoProblem('Video couldn’t connect on this network.', 'Text chat still works. Try another connection or choose Next.');
+          } else if (connection.connectionState === 'disconnected') { $('remote-dot').classList.remove('live'); }
+        };
+        videoTimer = setTimeout(() => {
+          if (peer === connection && connection.connectionState !== 'connected') videoProblem('Video is taking a little longer.', 'You can keep chatting by text or try another connection.');
+        }, 35000);
+        sendSignal('media', mediaState(), connection, targetRoom, epoch).catch(() => {});
+        if (data.role === 'initiator') {
+          try {
+            await connection.setLocalDescription(await connection.createOffer());
+            if (peer !== connection || epoch !== generation) return;
+            await sendSignal('offer', { type: connection.localDescription.type, sdp: connection.localDescription.sdp }, connection, targetRoom, epoch);
+          } catch { if (peer === connection && epoch === generation) videoProblem('Could not start video.', 'You can still chat by text or choose Next.'); }
+        }
+      }
+      async function flushCandidates(connection) {
+        const queued = candidates; candidates = [];
+        for (const candidate of queued) {
+          if (connection !== peer) return;
+          try { await connection.addIceCandidate(candidate); } catch {}
+        }
+      }
+      async function receiveSignal(event, epoch) {
+        const connection = peer, targetRoom = roomId;
+        if (!connection || peerRoom !== targetRoom) return;
+        if (event.kind === 'offer') {
+          await connection.setRemoteDescription(event.data);
+          if (connection !== peer || epoch !== generation) return;
+          await flushCandidates(connection);
+          await connection.setLocalDescription(await connection.createAnswer());
+          if (connection !== peer || epoch !== generation) return;
+          await sendSignal('answer', { type: connection.localDescription.type, sdp: connection.localDescription.sdp }, connection, targetRoom, epoch);
+        } else if (event.kind === 'answer') {
+          if (connection.signalingState !== 'have-local-offer') return;
+          await connection.setRemoteDescription(event.data);
+          if (connection !== peer || epoch !== generation) return;
+          await flushCandidates(connection);
+        } else if (event.kind === 'ice') {
+          if (connection.remoteDescription) { try { await connection.addIceCandidate(event.data); } catch {} }
+          else if (candidates.length < 128) candidates.push(event.data);
+        } else if (event.kind === 'media') {
+          remoteCamera = event.data.video;
+          if (!remoteCamera) remotePlaceholder('Their camera is paused.', event.data.audio ? 'Their microphone is on.' : 'Their microphone is muted.');
+          else if ($('remote-video').srcObject) { $('remote-placeholder').hidden = true; $('remote-video').hidden = false; }
+        }
+      }
+      function mediaState() { return { audio: !!localStream?.getAudioTracks().some(track => track.enabled), video: !!localStream?.getVideoTracks().some(track => track.enabled) }; }
+      function toggleTrack(kind) {
+        if (!localStream) return;
+        const tracks = kind === 'video' ? localStream.getVideoTracks() : localStream.getAudioTracks();
+        const enabled = !tracks.some(track => track.enabled);
+        tracks.forEach(track => { track.enabled = enabled; }); updateLocal();
+        if (peer && roomId) sendSignal('media', mediaState(), peer, roomId, generation).catch(() => {});
+      }
+      $('start').addEventListener('click', () => begin());
+      $('next').addEventListener('click', () => begin(true));
+      $('stop').addEventListener('click', () => { const hadChat = phase !== 'idle'; stop(); if (hadChat && $('messages').children.length) system('You disconnected. Press Start for a new chat.'); });
+      for (const selected of ['text', 'video']) $(selected + '-mode').addEventListener('click', () => { if (mode === selected) return; stop(); mode = selected; resetLog(); render(); });
+      $('camera').addEventListener('click', () => toggleTrack('video'));
+      $('microphone').addEventListener('click', () => toggleTrack('audio'));
+      $('play-audio').addEventListener('click', () => { $('remote-video').play().then(() => { $('play-audio').hidden = true; }).catch(() => error('Your browser blocked playback. Check its audio settings.')); });
+      $('message').addEventListener('input', () => { resize(); error(); render(); });
+      $('message').addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); $('form').requestSubmit(); } });
+      $('form').addEventListener('submit', async event => {
+        event.preventDefault();
+        const body = $('message').value.trim(), targetRoom = roomId, epoch = generation;
+        if (phase !== 'matched' || !body || sending || !targetRoom) return;
+        if (!draft || draft.data.body !== body || draft.roomId !== targetRoom) draft = { action: 'event', kind: 'message', data: { body }, roomId: targetRoom, eventId: crypto.randomUUID() };
+        const serial = ++sendSerial; sending = true; error(); render();
+        try {
+          const data = await retry(draft, epoch, targetRoom);
+          if (epoch !== generation || roomId !== targetRoom) return;
+          seen.add(data.event.id); addMessage(data.event); draft = null;
+          if ($('message').value.trim() === body) { $('message').value = ''; resize(); }
+        } catch (problem) { if (epoch === generation && roomId === targetRoom) { error(problem.message); if (problem.code === 'CHAT_ENDED') schedulePoll(0); } }
+        finally { if (serial === sendSerial) { sending = false; render(); if (phase === 'matched') $('message').focus(); } }
+      });
+      $('share').addEventListener('click', async () => {
+        const link = location.protocol === 'file:' ? HOSTED : location.origin;
+        try { await navigator.clipboard.writeText(link); $('share-text').textContent = 'Link copied!'; $('share').setAttribute('aria-label', 'Link copied'); setTimeout(() => { $('share-text').textContent = 'Invite a friend'; $('share').setAttribute('aria-label', 'Copy site link'); }, 1800); }
+        catch { window.prompt('Share this link:', link); }
+      });
+      window.addEventListener('online', () => schedulePoll(0));
+      window.addEventListener('offline', () => { if (active) $('status-label').textContent = 'Offline'; });
+      document.addEventListener('visibilitychange', () => { if (!document.hidden && active) schedulePoll(0); });
+      window.addEventListener('pagehide', () => {
+        const payload = { action: 'leave', mode, seq: ++seq };
+        active = false; generation++; clearTimeout(pollTimer); closePeer(); releaseMedia();
+        api(payload, '', true).catch(() => {});
+      });
+      window.addEventListener('pageshow', event => { if (event.persisted) { phase = 'idle'; busy = false; roomId = null; render(); } });
+      render();
+    })();
+  </script>
+</body>
+</html>
